@@ -1,0 +1,276 @@
+@import "tailwindcss";
+
+/* GOOGLE FONTS IMPORTS*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+/* FONT UTILITY CLASSES*/
+.inter {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+/* GLOBAL RESET & BASE STYLES */
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: #f8f8f8;
+  color: #222;
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Improve image loading performance */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.bg-background {
+  background: #f8f8f8;
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1025px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+
+/* SKILLS TAGS STYLES*/
+.skills span {
+  display: inline-block;
+  border: 1px solid #eee;
+  background: #f7f7f7;
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+
+.project-skills span {
+  display: inline-block;
+  border: 1px solid #eee;
+  background: #f7f7f7;
+  border-radius: 2px;
+  padding: 5px 15px;
+}
+
+
+/* CUSTOM CURSOR STYLES */
+#cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #222;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* HORIZONTAL IMAGE GALLERY */
+.horizontal-gallery {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-row {
+  display: flex;
+  gap: 20px;
+  will-change: transform;
+}
+
+.image-row img {
+  width: 600px;
+  height: 500px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 20px;
+  transition: filter 0.3s ease;
+}
+
+
+@media (max-width: 768px) {
+  .image-row img {
+    width: 300px;
+    height: 250px;
+  }
+
+}
+
+.image-row img:hover {
+  filter: saturate(1.2) brightness(1.1);
+}
+
+
+/* PARALLAX SCROLL SECTIONS*/
+.parallax {
+  position: relative;
+  height: 200vh;
+  /* Scroll height for parallax effect */
+  overflow: hidden;
+  width: 100%;
+}
+
+.parallax .hero {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: -99;
+
+}
+
+.parallax .about {
+  position: absolute;
+  top: 100vh;
+  /* Appears after scrolling one screen */
+  width: 100%;
+  height: 100vh;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .parallax {
+    height: auto;
+    /* normal height */
+    overflow: visible;
+  }
+
+  .parallax .hero {
+    position: relative;
+    /* normal flow */
+    z-index: auto;
+  }
+
+  .parallax .about {
+    position: relative;
+    /* normal stacking */
+    top: 0;
+    height: auto;
+    /* adjust height */
+  }
+}
+
+/* EXPERIENCE SECTION (ACCORDION STYLE) */
+.experience {
+  cursor: pointer;
+}
+
+.experience-description {
+  visibility: hidden;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.6s ease-in-out;
+}
+
+.experience.active .experience-description {
+  visibility: visible;
+  opacity: 1;
+  max-height: 300px;
+  margin-top: 40px;
+  transition: all 0.6s ease-in-out;
+}
+
+
+/* EDUCATION SECTION + SVG PATH ANIMATION*/
+.education {
+  background: #f8f8f8;
+}
+
+svg {
+  max-width: 600px;
+  overflow: visible;
+  margin-top: 10vh;
+}
+
+.line {
+  fill: none;
+  stroke: black;
+  stroke-width: 2px;
+}
+
+.ball {
+  fill: black;
+  visibility: hidden;
+}
+
+text {
+  fill: black;
+  font-size: 15px;
+  font-family: "Bebas Neue", sans-serif;
+  visibility: hidden;
+}
+
+
+/* ABOUT SECTION */
+#about {
+  background: #f8f8f8;
+}
+
+#about h2 span {
+  display: inline-block;
+}
+
+
+/* HORIZONTAL SCROLL CONTAINERS (Reusable)*/
+.horizontal-container,
+.done-container {
+  will-change: transform;
+}
+
+.project-card:first-child {
+  margin-left: 50px;
+}
+
+.project-card:last-child {
+  margin-right: 50px;
+}
+
+/* RECOMMENDATION TEXT SECTION */
+
+.recommendation-text .description {
+  color: #000;
+}
