@@ -215,11 +215,11 @@ const Achieved = () => {
                     <h3 className="text-3xl font-bold text-gray-900">Research Philosophy</h3>
                 </div>
                 <blockquote className="text-xl italic text-gray-700 mb-4 leading-relaxed">
-                    "If we knew what it was we were doing, it would not be called research, would it?"
+                    &ldquo;If we knew what it was we were doing, it would not be called research, would it?&rdquo;
                 </blockquote>
                 <p className="text-gray-600 text-right">— Albert Einstein</p>
                 <p className="text-gray-700 mt-6 leading-relaxed">
-                    As an engineer, researcher, and academician, I am fascinated by the significant contributions researchers make to technological advancements in telecommunications, healthcare, computing, space exploration, and society at large. I firmly believe that technical research is a powerful driver of economic development for any nation. Inspired by Einstein's words, I embrace the journey into the unknown through research. It is through this exploration and discovery that we transform the unknown into knowledge, propelling innovation and progress in our fields.
+                    As an engineer, researcher, and academician, I am fascinated by the significant contributions researchers make to technological advancements in telecommunications, healthcare, computing, space exploration, and society at large. I firmly believe that technical research is a powerful driver of economic development for any nation. Inspired by Einstein&apos;s words, I embrace the journey into the unknown through research. It is through this exploration and discovery that we transform the unknown into knowledge, propelling innovation and progress in our fields.
                 </p>
             </div>
         </section>

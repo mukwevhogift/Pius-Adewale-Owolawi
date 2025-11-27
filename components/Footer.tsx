@@ -158,19 +158,19 @@ const Footer = () => {
           <div className="p-6 bg-white/5 rounded-xl">
             <h4 className="text-sm font-semibold text-blue-300 mb-3">LIFE PHILOSOPHY</h4>
             <blockquote className="text-sm italic text-gray-300 leading-relaxed">
-              "Kindness is seeing the best in others when they cannot see it in themselves"
+              &ldquo;Kindness is seeing the best in others when they cannot see it in themselves&rdquo;
             </blockquote>
           </div>
           <div className="p-6 bg-white/5 rounded-xl">
             <h4 className="text-sm font-semibold text-blue-300 mb-3">TEACHING PHILOSOPHY</h4>
             <blockquote className="text-sm italic text-gray-300 leading-relaxed">
-              "I hear and I forget. I see and I remember. I do and I understand."
+              &ldquo;I hear and I forget. I see and I remember. I do and I understand.&rdquo;
             </blockquote>
           </div>
           <div className="p-6 bg-white/5 rounded-xl">
             <h4 className="text-sm font-semibold text-blue-300 mb-3">RESEARCH PHILOSOPHY</h4>
             <blockquote className="text-sm italic text-gray-300 leading-relaxed">
-              "Research is what I am doing when I don't know what I am doing" — Wernher Von Braun
+              &ldquo;Research is what I am doing when I don&apos;t know what I am doing&rdquo; — Wernher Von Braun
             </blockquote>
           </div>
         </div>

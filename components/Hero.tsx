@@ -183,7 +183,7 @@ const Hero = () => {
                         <div className="flex gap-4 mb-6 p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
                             <i className="ri-team-line text-2xl text-purple-600"></i>
                             <p className="text-gray-700">
-                                <span className="font-semibold text-purple-900">Research Excellence:</span> Supervised 29 Master's and 8 PhD graduates, with 13 active postdoctoral fellows in AI, Computer Vision, and Wireless Communications.
+                                <span className="font-semibold text-purple-900">Research Excellence:</span> Supervised 29 Master&apos;s and 8 PhD graduates, with 13 active postdoctoral fellows in AI, Computer Vision, and Wireless Communications.
                             </p>
                         </div>
                         <div className="flex gap-4 mb-12 p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">

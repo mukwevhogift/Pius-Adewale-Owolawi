@@ -1,20 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Bebas_Neue, Montserrat } from "next/font/google";
 import 'remixicon/fonts/remixicon.css'
 import SmoothScroll from "@/components/SmoothScroll";
 import StructuredData from "@/components/StructuredData";
-
-const bebasNeue = Bebas_Neue({
-  weight: "400", // only one weight available
-  subsets: ["latin"],
-  variable: "--font-bebas-neue",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-});
 
 export const viewport = {
   width: 'device-width',

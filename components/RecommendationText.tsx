@@ -97,7 +97,7 @@ const RecommendationText = () => {
             <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
               <i className="ri-tools-line text-2xl text-white"></i>
             </div>
-            <h3 className="text-2xl font-bold text-gray-900">Let's Fix It Initiative</h3>
+            <h3 className="text-2xl font-bold text-gray-900">Let&apos;s Fix It Initiative</h3>
           </div>
           <p className="text-gray-700 leading-relaxed">
             Founded this volunteer-based initiative to build technical capacity among underprivileged youth through repair services, solar installation, and skills training in electronics and electrical systems.
@@ -141,7 +141,7 @@ const RecommendationText = () => {
                 <i className={`${testimonial.icon} text-2xl text-white`}></i>
               </div>
               <blockquote className="text-gray-700 italic mb-6 leading-relaxed">
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </blockquote>
               <div className="border-t pt-4">
                 <p className="font-bold text-gray-900">{testimonial.author}</p>
