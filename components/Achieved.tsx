@@ -131,16 +131,21 @@ const Achieved = () => {
 
     return (
         <section className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-4 md:px-16 py-16" id="achieved">
-            <h2 className="text-7xl font-500 mb-6 bebas-neue-regular bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Honours & Recognition
-            </h2>
+            <div className="text-center mb-12">
+                <h2 className="text-6xl md:text-7xl font-bold bebas-neue-regular bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+                    Honours & Recognition
+                </h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                    A legacy of excellence, innovation, and contribution to academia
+                </p>
+            </div>
 
             {/* Awards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 items-stretch">
                 {awards.map((award, index) => (
                     <div
                         key={index}
-                        className="achievement-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all p-6 border-t-4 border-transparent hover:border-blue-500 group"
+                        className="achievement-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all p-6 border-t-4 border-transparent hover:border-blue-500 group flex flex-col"
                     >
                         <div className={`w-16 h-16 bg-gradient-to-br ${award.color} rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                             <i className={`${award.icon} text-3xl text-white`}></i>
@@ -152,17 +157,20 @@ const Achieved = () => {
                             </span>
                         </div>
                         <p className="text-sm font-semibold text-blue-600 mb-3">{award.organization}</p>
-                        <p className="text-gray-600 text-sm leading-relaxed">{award.description}</p>
+                        <p className="text-gray-600 text-sm leading-relaxed flex-1">{award.description}</p>
                     </div>
                 ))}
             </div>
 
             {/* Professional Memberships */}
             <div className="mt-16">
-                <h3 className="text-5xl font-bold mb-8 bebas-neue-regular bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                    Professional Memberships
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="text-center mb-8">
+                    <h3 className="text-5xl font-bold bebas-neue-regular bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+                        Professional Memberships
+                    </h3>
+                    <p className="text-lg text-gray-600">Affiliations with leading engineering and technology bodies</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {memberships.map((membership, index) => (
                         <div
                             key={index}

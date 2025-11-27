@@ -124,7 +124,7 @@ const Education = () => {
   return (
     <section className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 md:px-16 py-20" id="education">
       {/* Header */}
-      <div className="text-center mb-8">
+      <div className="text-center mb-12">
         <h2 className="text-6xl md:text-7xl font-bold bebas-neue-regular text-white mb-4">
           Education & Qualifications
         </h2>
@@ -134,7 +134,7 @@ const Education = () => {
       </div>
 
       {/* Academic Degrees Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16 items-stretch">
         {educationData.map((edu, index) => (
           <div
             key={index}
@@ -184,14 +184,14 @@ const Education = () => {
 
       {/* Professional Certifications */}
       <div className="certifications-section mb-16">
-        <div className="text-center mb-6">
+        <div className="text-center mb-8">
           <h3 className="text-5xl font-bold bebas-neue-regular text-white mb-3">
             Professional Certifications
           </h3>
           <p className="text-lg text-blue-200">Industry-recognized credentials and specialized training</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {certifications.map((cert, idx) => (
             <div
               key={idx}
