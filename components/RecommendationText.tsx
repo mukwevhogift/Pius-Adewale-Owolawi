@@ -118,12 +118,27 @@ const RecommendationText = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <div key={index} className="testimonial-card bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mb-6">
-                <i className="ri-double-quotes-l text-2xl text-white"></i>
-              </div>
+              {/* Profile Image or Quote Icon */}
+              {testimonial.image_url ? (
+                <div className="mb-6">
+                  <img 
+                    src={testimonial.image_url} 
+                    alt={testimonial.name}
+                    className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
+                  />
+                </div>
+              ) : (
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mb-6">
+                  <i className="ri-double-quotes-l text-2xl text-white"></i>
+                </div>
+              )}
+              
+              {/* Testimonial Content */}
               <blockquote className="text-gray-700 italic mb-6 leading-relaxed">
                 &ldquo;{testimonial.content}&rdquo;
               </blockquote>
+              
+              {/* Author Info */}
               <div className="border-t pt-4">
                 <p className="font-bold text-gray-900">{testimonial.name}</p>
                 <p className="text-sm text-gray-600">{testimonial.role}</p>

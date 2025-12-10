@@ -19,6 +19,22 @@ export default function SettingsPage() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [settings, setSettings] = useState<Record<string, any>>({});
+  
+  // Password update states
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
+  const [updatingPassword, setUpdatingPassword] = useState(false);
+
+  // Email update states
+  const [newEmail, setNewEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [emailSuccess, setEmailSuccess] = useState(false);
+  const [updatingEmail, setUpdatingEmail] = useState(false);
 
   // Fetch all settings on mount
   useEffect(() => {
@@ -93,6 +109,99 @@ export default function SettingsPage() {
     // Update all settings in the current tab
     for (const [key, value] of Object.entries(settingsToUpdate)) {
       await updateSetting(key, value);
+    }
+  };
+
+  const handlePasswordUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordError('');
+    setPasswordSuccess(false);
+
+    // Validation
+    if (!passwordForm.currentPassword || !passwordForm.newPassword || !passwordForm.confirmPassword) {
+      setPasswordError('All fields are required');
+      return;
+    }
+
+    if (passwordForm.newPassword.length < 8) {
+      setPasswordError('New password must be at least 8 characters long');
+      return;
+    }
+
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      setPasswordError('New passwords do not match');
+      return;
+    }
+
+    if (passwordForm.currentPassword === passwordForm.newPassword) {
+      setPasswordError('New password must be different from current password');
+      return;
+    }
+
+    try {
+      setUpdatingPassword(true);
+      const response = await fetch('/api/admin/update-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          currentPassword: passwordForm.currentPassword,
+          newPassword: passwordForm.newPassword,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to update password');
+      }
+
+      setPasswordSuccess(true);
+      setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      setTimeout(() => setPasswordSuccess(false), 5000);
+    } catch (err: any) {
+      setPasswordError(err.message || 'Failed to update password');
+    } finally {
+      setUpdatingPassword(false);
+    }
+  };
+
+  const handleEmailUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setEmailError('');
+    setEmailSuccess(false);
+
+    if (!newEmail) {
+      setEmailError('Email is required');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newEmail)) {
+      setEmailError('Invalid email format');
+      return;
+    }
+
+    try {
+      setUpdatingEmail(true);
+      const response = await fetch('/api/admin/update-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ newEmail }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to update email');
+      }
+
+      setEmailSuccess(true);
+      setNewEmail('');
+      setTimeout(() => setEmailSuccess(false), 5000);
+    } catch (err: any) {
+      setEmailError(err.message || 'Failed to update email');
+    } finally {
+      setUpdatingEmail(false);
     }
   };
 
@@ -211,67 +320,199 @@ export default function SettingsPage() {
           )}
 
           {activeTab === 'contact' && (
-            <form onSubmit={(e) => {
-              const formData = new FormData(e.currentTarget);
-              handleSubmit(e, {
-                contact_email: formData.get('contact_email'),
-                contact_phone: formData.get('contact_phone'),
-                office_address: formData.get('office_address'),
-              });
-            }}>
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h2>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <>
+              <form onSubmit={(e) => {
+                const formData = new FormData(e.currentTarget);
+                handleSubmit(e, {
+                  contact_email: formData.get('contact_email'),
+                  contact_phone: formData.get('contact_phone'),
+                  office_address: formData.get('office_address'),
+                });
+              }}>
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h2>
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Display Email Address
+                          </label>
+                          <input
+                            type="email"
+                            name="contact_email"
+                            defaultValue={settings.contact_email || ''}
+                            placeholder="email@example.com"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Phone Number
+                          </label>
+                          <input
+                            type="tel"
+                            name="contact_phone"
+                            defaultValue={settings.contact_phone || ''}
+                            placeholder="+27 12 345 6789"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </div>
+                      </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Email Address
+                          Office Address
+                        </label>
+                        <textarea
+                          name="office_address"
+                          rows={2}
+                          defaultValue={settings.office_address || ''}
+                          placeholder="Building, Room, Street, City, Country"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                      <button 
+                        type="submit"
+                        disabled={saving}
+                        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400"
+                      >
+                        {saving ? 'Saving...' : 'Save Contact Info'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              {/* Account Security Section */}
+              <div className="mt-12 pt-8 border-t border-gray-200">
+                <h2 className="text-xl font-bold text-gray-900 mb-6">Account Security</h2>
+                
+                {/* Update Email */}
+                <div className="bg-gray-50 rounded-lg p-6 mb-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                    <i className="ri-mail-line text-blue-600"></i>
+                    Update Email Address
+                  </h3>
+                  
+                  {emailSuccess && (
+                    <div className="mb-4 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center gap-2">
+                      <i className="ri-check-line text-xl"></i>
+                      Email update initiated. Please check your new email for confirmation.
+                    </div>
+                  )}
+
+                  {emailError && (
+                    <div className="mb-4 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg flex items-center gap-2">
+                      <i className="ri-error-warning-line text-xl"></i>
+                      {emailError}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleEmailUpdate}>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          New Email Address
                         </label>
                         <input
                           type="email"
-                          name="contact_email"
-                          defaultValue={settings.contact_email || ''}
-                          placeholder="email@example.com"
+                          value={newEmail}
+                          onChange={(e) => setNewEmail(e.target.value)}
+                          placeholder="newemail@example.com"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          required
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          You will receive a confirmation email at the new address
+                        </p>
+                      </div>
+                      <button 
+                        type="submit"
+                        disabled={updatingEmail}
+                        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400"
+                      >
+                        {updatingEmail ? 'Updating...' : 'Update Email'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                {/* Update Password */}
+                <div className="bg-gray-50 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                    <i className="ri-lock-password-line text-blue-600"></i>
+                    Change Password
+                  </h3>
+
+                  {passwordSuccess && (
+                    <div className="mb-4 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center gap-2">
+                      <i className="ri-check-line text-xl"></i>
+                      Password updated successfully!
+                    </div>
+                  )}
+
+                  {passwordError && (
+                    <div className="mb-4 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg flex items-center gap-2">
+                      <i className="ri-error-warning-line text-xl"></i>
+                      {passwordError}
+                    </div>
+                  )}
+
+                  <form onSubmit={handlePasswordUpdate}>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Current Password *
+                        </label>
+                        <input
+                          type="password"
+                          value={passwordForm.currentPassword}
+                          onChange={(e) => setPasswordForm({ ...passwordForm, currentPassword: e.target.value })}
+                          placeholder="Enter current password"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          required
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Phone Number
+                          New Password *
                         </label>
                         <input
-                          type="tel"
-                          name="contact_phone"
-                          defaultValue={settings.contact_phone || ''}
-                          placeholder="+27 12 345 6789"
+                          type="password"
+                          value={passwordForm.newPassword}
+                          onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
+                          placeholder="Enter new password (min. 8 characters)"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          required
+                          minLength={8}
                         />
                       </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Confirm New Password *
+                        </label>
+                        <input
+                          type="password"
+                          value={passwordForm.confirmPassword}
+                          onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
+                          placeholder="Re-enter new password"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          required
+                          minLength={8}
+                        />
+                      </div>
+                      <button 
+                        type="submit"
+                        disabled={updatingPassword}
+                        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400"
+                      >
+                        {updatingPassword ? 'Updating...' : 'Update Password'}
+                      </button>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Office Address
-                      </label>
-                      <textarea
-                        name="office_address"
-                        rows={2}
-                        defaultValue={settings.office_address || ''}
-                        placeholder="Building, Room, Street, City, Country"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                    <button 
-                      type="submit"
-                      disabled={saving}
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400"
-                    >
-                      {saving ? 'Saving...' : 'Save Changes'}
-                    </button>
-                  </div>
+                  </form>
                 </div>
               </div>
-            </form>
+            </>
           )}
 
           {activeTab === 'social' && (
