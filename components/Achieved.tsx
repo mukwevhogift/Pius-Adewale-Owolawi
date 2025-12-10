@@ -1,13 +1,38 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { createClient } from "@/lib/supabase/client";
+import { AwardItem, ProfessionalMembership } from "@/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Achieved = () => {
+  const [awards, setAwards] = useState<AwardItem[]>([]);
+  const [memberships, setMemberships] = useState<ProfessionalMembership[]>([]);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
+        const fetchData = async () => {
+            const supabase = createClient();
+            
+            const [awardsResponse, membershipsResponse] = await Promise.all([
+                supabase.from("awards").select("*").order("order_index"),
+                supabase.from("professional_memberships").select("*").order("order_index"),
+            ]);
+
+            if (awardsResponse.data) setAwards(awardsResponse.data);
+            if (membershipsResponse.data) setMemberships(membershipsResponse.data);
+            setLoading(false);
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (loading) return;
+
         gsap.from("#achieved h2", {
             y: 50,
             duration: 0.1,
@@ -32,102 +57,18 @@ const Achieved = () => {
                 scrub: 3,
             },
         });
-    }, []);
+    }, [loading]);
 
-    const awards = [
-        {
-            title: "Top 500 African Researchers",
-            year: "2015-2021",
-            organization: "Continental Recognition",
-            icon: "ri-trophy-line",
-            color: "from-yellow-500 to-orange-500",
-            description: "Recognized among Africa's leading researchers for scholarly output and impact"
-        },
-        {
-            title: "Senior Researcher of the Year",
-            year: "2020 & 2018",
-            organization: "Tshwane University of Technology",
-            icon: "ri-medal-line",
-            color: "from-blue-500 to-purple-500",
-            description: "Acknowledged for sustained research excellence and high-impact outputs"
-        },
-        {
-            title: "Most Outstanding Researcher",
-            year: "2016, 2014, 2012",
-            organization: "TUT Faculty of Engineering",
-            icon: "ri-award-line",
-            color: "from-green-500 to-emerald-500",
-            description: "Recognized for outstanding leadership in research development and postgraduate supervision"
-        },
-        {
-            title: "Senate Research Excellence Award",
-            year: "2016",
-            organization: "Tshwane University of Technology",
-            icon: "ri-star-line",
-            color: "from-purple-500 to-pink-500",
-            description: "Conferred by University Senate for significant scholarly contributions and national visibility"
-        },
-        {
-            title: "Vice-Chancellor's Teaching Excellence Award",
-            year: "2015",
-            organization: "Tshwane University of Technology",
-            icon: "ri-book-mark-line",
-            color: "from-indigo-500 to-blue-500",
-            description: "Honoured for innovative teaching practices, learner engagement, and curriculum transformation"
-        },
-        {
-            title: "BIARI Alumnus",
-            year: "2013",
-            organization: "Brown University, USA",
-            icon: "ri-global-line",
-            color: "from-cyan-500 to-teal-500",
-            description: "Selected for global interdisciplinary fellowship on development, policy, and academic leadership"
-        },
-        {
-            title: "Best Paper Award",
-            year: "2012",
-            organization: "ATISR Conference, Taipei",
-            icon: "ri-file-text-line",
-            color: "from-red-500 to-orange-500",
-            description: "Joint recipient for novel contributions to wireless systems and optimization"
-        },
-        {
-            title: "Best Engineering Mentor",
-            year: "2006 & 2007",
-            organization: "University of KwaZulu-Natal",
-            icon: "ri-user-star-line",
-            color: "from-pink-500 to-rose-500",
-            description: "Recognized for exceptional mentorship and student development in engineering education"
-        }
-    ];
-
-    const memberships = [
-        {
-            name: "Engineering Council of South Africa (ECSA)",
-            role: "Registered Member",
-            reg: "Reg. No: 2018400031"
-        },
-        {
-            name: "Institute of Electrical and Electronics Engineers (IEEE)",
-            role: "Member",
-            reg: "MIEEE"
-        },
-        {
-            name: "South African Institute of Electrical Engineers (SAIEE)",
-            role: "Member",
-            reg: "Professional Member"
-        },
-        {
-            name: "South African Radio League (SARL)",
-            role: "Member",
-            reg: "Active Member"
-        },
-        {
-            name: "South African Amateur Radio Satellite Association (SA AMSAT)",
-            role: "Member",
-            reg: "Active Member"
-        }
-    ];
+    if (loading) {
+        return (
+            <section className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-slate-800 p-4 md:px-16 py-20 flex items-center justify-center">
+                <div className="text-center">
+                    <i className="ri-loader-4-line text-5xl text-white animate-spin mb-4"></i>
+                    <p className="text-white">Loading awards data...</p>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-4 md:px-16 py-16" id="achieved">
@@ -147,8 +88,8 @@ const Achieved = () => {
                         key={index}
                         className="achievement-card bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all p-6 border-t-4 border-transparent hover:border-blue-500 group flex flex-col"
                     >
-                        <div className={`w-16 h-16 bg-gradient-to-br ${award.color} rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                            <i className={`${award.icon} text-3xl text-white`}></i>
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <i className="ri-trophy-line text-3xl text-white"></i>
                         </div>
                         <div className="flex items-start justify-between mb-3">
                             <h3 className="text-xl font-bold text-gray-900 flex-1">{award.title}</h3>
@@ -156,7 +97,7 @@ const Achieved = () => {
                                 {award.year}
                             </span>
                         </div>
-                        <p className="text-sm font-semibold text-blue-600 mb-3">{award.organization}</p>
+                        <p className="text-sm font-semibold text-blue-600 mb-3">{award.issuer}</p>
                         <p className="text-gray-600 text-sm leading-relaxed flex-1">{award.description}</p>
                     </div>
                 ))}
@@ -181,9 +122,9 @@ const Achieved = () => {
                                     <i className="ri-shield-check-line text-2xl text-white"></i>
                                 </div>
                                 <div className="flex-1">
-                                    <h4 className="text-lg font-bold text-gray-900 mb-1">{membership.name}</h4>
+                                    <h4 className="text-lg font-bold text-gray-900 mb-1">{membership.organization}</h4>
                                     <p className="text-sm text-purple-600 font-semibold">{membership.role}</p>
-                                    <p className="text-xs text-gray-500 mt-1">{membership.reg}</p>
+                                    <p className="text-xs text-gray-500 mt-1">Since {membership.year_joined}</p>
                                 </div>
                             </div>
                         </div>

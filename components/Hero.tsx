@@ -1,13 +1,36 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { createClient } from "@/lib/supabase/client";
+import { HeroSection } from "@/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
+    const [heroData, setHeroData] = useState<HeroSection | null>(null);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
+        const fetchData = async () => {
+            const supabase = createClient();
+            
+            const { data } = await supabase
+                .from("hero_section")
+                .select("*")
+                .single();
+
+            if (data) setHeroData(data);
+            setLoading(false);
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (loading) return;
+
         const scrollDownArrow = document.querySelector("#scroll-down i");
 
         if (scrollDownArrow) {
@@ -76,36 +99,63 @@ const Hero = () => {
             },
         });
 
-    }, []);
+    }, [loading]);
+
+    if (loading || !heroData) {
+        return (
+            <section className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center">
+                <div className="text-center">
+                    <i className="ri-loader-4-line text-5xl text-white animate-spin mb-4"></i>
+                    <p className="text-white">Loading...</p>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <div className="parallax">
             {/* Hero Section */}
-            <section className="hero min-h-screen flex flex-col md:flex-row items-center justify-end md:px-16 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
-                <div className="w-full h-full md:h-screen md:w-2/5 flex flex-col items-start p-8 justify-around">
+            <section className="hero min-h-screen flex flex-col md:flex-row items-center justify-end px-4 md:px-16 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 pt-4 pb-8 md:py-0">
+                <div className="w-full h-full md:h-screen md:w-2/5 flex flex-col items-start py-6 md:p-8 justify-around">
+                    {/* Mobile Stats - Visible on small screens */}
+                    <div
+                        id="stats-mobile"
+                        className="flex md:hidden items-center justify-between w-full text-white mb-6 gap-4"
+                    >
+                        <div className="flex-1 text-center bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                            <blockquote className="font-light text-3xl text-blue-300">{heroData.stat_1_value}</blockquote>
+                            <p className="font-regular text-gray-300 text-xs mt-1">{heroData.stat_1_label}</p>
+                        </div>
+                        <div className="flex-1 text-center bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                            <blockquote className="font-light text-3xl text-blue-300">{heroData.stat_2_value}</blockquote>
+                            <p className="font-regular text-gray-300 text-xs mt-1">{heroData.stat_2_label}</p>
+                        </div>
+                    </div>
+
+                    {/* Desktop Stats */}
                     <div
                         id="stats"
                         className="hidden intro-stats md:flex items-center justify-space w-full text-white"
                     >
                         <div className="w-1/2">
-                            <blockquote className="font-light text-5xl text-blue-300">200+</blockquote>
-                            <p className="font-regular text-gray-300">&emsp;&emsp;&nbsp;Publications</p>
+                            <blockquote className="font-light text-5xl text-blue-300">{heroData.stat_1_value}</blockquote>
+                            <p className="font-regular text-gray-300">&emsp;&emsp;&nbsp;{heroData.stat_1_label}</p>
                         </div>
                         <div className="w-1/2">
-                            <blockquote className="font-light text-5xl text-blue-300">R94M+</blockquote>
-                            <p className="font-regular text-gray-300">&emsp;&emsp;Research Funding</p>
+                            <blockquote className="font-light text-5xl text-blue-300">{heroData.stat_2_value}</blockquote>
+                            <p className="font-regular text-gray-300">&emsp;&emsp;{heroData.stat_2_label}</p>
                         </div>
                     </div>
 
-                    <div className="intro-heading mb-16 md:mb-0">
-                        <p className="text-2xl md:text-3xl font-light text-blue-200">Distinguished Professor</p>
+                    <div className="intro-heading mb-8 md:mb-0">
+                        <p className="text-xl md:text-2xl lg:text-3xl font-light text-blue-200">{heroData.title}</p>
                         <h1
-                            className="text-6xl md:text-8xl font-regular bebas-neue-regular text-white"
+                            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-regular bebas-neue-regular text-white leading-tight"
                             id="hero-name"
                         >
-                            Prof. Pius <br />Owolawi
+                            {heroData.name}
                         </h1>
-                        <p className="text-xl md:text-2xl font-light text-gray-300 mt-4">PhD, ECSA, MIEEE, SAIEE</p>
+                        <p className="text-lg md:text-xl lg:text-2xl font-light text-gray-300 mt-3 md:mt-4">{heroData.credentials}</p>
                     </div>
 
                     <div className="hidden md:flex items-center gap-2 text-white" id="scroll-down">
@@ -116,14 +166,14 @@ const Hero = () => {
 
                 <div
                     id="hero-image"
-                    className="w-full h-full md:min-h-screen md:w-3/5 flex flex-col items-end justify-end"
+                    className="w-full h-[400px] md:h-full md:min-h-screen md:w-3/5 flex flex-col items-end justify-end"
                 >
                     <div className="w-full h-full flex items-end justify-center relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60"></div>
                         <img
-                            src="/img/prof-owolawi.jpg"
-                            className="w-full md:w-5/6 object-cover rounded-tl-3xl shadow-2xl"
-                            alt="Prof. Pius Owolawi"
+                            src={heroData.profile_image_url || "/img/prof-owolawi.jpg"}
+                            className="w-full md:w-5/6 h-full object-cover rounded-tl-3xl shadow-2xl"
+                            alt={heroData.name}
                         />
                     </div>
                 </div>

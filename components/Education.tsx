@@ -1,13 +1,38 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { createClient } from "@/lib/supabase/client";
+import { EducationItem, CertificationItem } from "@/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Education = () => {
+const TimelineSection = () => {
+  const [educationData, setEducationData] = useState<EducationItem[]>([]);
+  const [certifications, setCertifications] = useState<CertificationItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    const fetchData = async () => {
+      const supabase = createClient();
+      
+      const [eduResponse, certResponse] = await Promise.all([
+        supabase.from("education").select("*").order("order_index"),
+        supabase.from("certifications").select("*").order("order_index"),
+      ]);
+
+      if (eduResponse.data) setEducationData(eduResponse.data);
+      if (certResponse.data) setCertifications(certResponse.data);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (loading) return;
+
     gsap.from("#education h2", {
       y: 50,
       duration: 0.1,
@@ -45,81 +70,18 @@ const Education = () => {
         scrub: 1,
       },
     });
-  }, []);
+  }, [loading]);
 
-  const educationData = [
-    {
-      degree: "PhD in Electronic Engineering",
-      institution: "University of KwaZulu-Natal (UKZN)",
-      country: "South Africa",
-      year: "2006 – 2010",
-      specialization: "Advanced wireless communication, signal processing, and energy-aware systems",
-      icon: "ri-graduation-cap-fill",
-      color: "from-blue-600 to-cyan-600",
-      bgColor: "from-blue-50 to-cyan-50"
-    },
-    {
-      degree: "MSc in Electronic Engineering",
-      institution: "University of KwaZulu-Natal (UKZN)",
-      country: "South Africa",
-      year: "2004 – 2006",
-      specialization: "Telecommunications systems, electronic circuit design, and network optimisation",
-      icon: "ri-medal-fill",
-      color: "from-purple-600 to-pink-600",
-      bgColor: "from-purple-50 to-pink-50"
-    },
-    {
-      degree: "B.Tech (Hons) in Applied Physics/Electronics",
-      institution: "Federal University of Technology, Akure",
-      country: "Nigeria",
-      year: "1996 – 2001",
-      specialization: "Electronics, instrumentation, and embedded systems",
-      icon: "ri-award-fill",
-      color: "from-green-600 to-emerald-600",
-      bgColor: "from-green-50 to-emerald-50"
-    },
-    {
-      degree: "Advanced Diploma in Remote Engineering, Mechatronics & Robotics",
-      institution: "Engineering Institute of Technology (EIT)",
-      country: "Australia",
-      year: "2015 – 2016",
-      specialization: "Automation, remote control systems, and intelligent robotics",
-      icon: "ri-robot-fill",
-      color: "from-orange-600 to-red-600",
-      bgColor: "from-orange-50 to-red-50"
-    },
-    {
-      degree: "PG Cert in AI & Machine Learning",
-      institution: "University of Texas at Austin",
-      country: "USA",
-      year: "2019 – 2020",
-      specialization: "Machine learning, deep learning, computer vision, and AI applications",
-      icon: "ri-brain-fill",
-      color: "from-indigo-600 to-purple-600",
-      bgColor: "from-indigo-50 to-purple-50"
-    },
-    {
-      degree: "PG Cert in Data Science & Business Analytics",
-      institution: "University of Texas at Austin",
-      country: "USA",
-      year: "2020 – 2021",
-      specialization: "Data analytics, predictive modelling, and data-driven business strategy",
-      icon: "ri-bar-chart-fill",
-      color: "from-teal-600 to-cyan-600",
-      bgColor: "from-teal-50 to-cyan-50"
-    }
-  ];
-
-  const certifications = [
-    { name: "CCNP", full: "Cisco Certified Network Professional", icon: "ri-shield-check-fill" },
-    { name: "CCNA", full: "Cisco Certified Network Associate", icon: "ri-shield-star-fill" },
-    { name: "MCSE", full: "Microsoft Certified Systems Engineer", icon: "ri-windows-fill" },
-    { name: "CWSP", full: "Certified Wireless Security Professional", icon: "ri-wifi-fill" },
-    { name: "CWNA", full: "Certified Wireless Network Administrator", icon: "ri-signal-wifi-fill" },
-    { name: "CFOS/D", full: "Certified Fibre Optic Design Specialist", icon: "ri-flashlight-fill" },
-    { name: "CFOT", full: "Certified Fibre Optic Technician", icon: "ri-tools-fill" },
-    { name: "Drone Pilot", full: "Remote Pilot Licence - SACAA", icon: "ri-flight-takeoff-fill" }
-  ];
+  if (loading) {
+    return (
+      <section className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 md:px-16 py-20 flex items-center justify-center">
+        <div className="text-center">
+          <i className="ri-loader-4-line text-5xl text-white animate-spin mb-4"></i>
+          <p className="text-white">Loading education data...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 p-4 md:px-16 py-20" id="education">
@@ -141,17 +103,19 @@ const Education = () => {
             className="education-card group relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 hover:bg-white/15 transition-all duration-300 hover:scale-105 flex flex-col"
           >
             {/* Gradient Background Overlay */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${edu.bgColor} opacity-0 group-hover:opacity-10 rounded-3xl transition-opacity duration-300`}></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 opacity-0 group-hover:opacity-10 rounded-3xl transition-opacity duration-300"></div>
 
             {/* Icon */}
-            <div className={`relative w-16 h-16 bg-gradient-to-br ${edu.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-              <i className={`${edu.icon} text-3xl text-white`}></i>
+            <div className="relative w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <i className="ri-graduation-cap-line text-3xl text-white"></i>
             </div>
 
             {/* Year Badge */}
             <div className="absolute top-8 right-8">
               <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30">
-                <span className="text-white font-semibold text-sm">{edu.year}</span>
+                <span className="text-white font-semibold text-sm">
+                  {edu.year}
+                </span>
               </div>
             </div>
 
@@ -166,17 +130,11 @@ const Education = () => {
                 <p className="text-lg text-blue-200 font-medium">{edu.institution}</p>
               </div>
 
-              <div className="flex items-center gap-2 mb-4">
-                <i className="ri-map-pin-line text-green-300"></i>
-                <p className="text-green-200">{edu.country}</p>
-              </div>
-
-              <div className="pt-4 border-t border-white/20">
-                <p className="text-sm text-gray-300 leading-relaxed">
-                  <span className="font-semibold text-blue-200">Focus: </span>
-                  {edu.specialization}
-                </p>
-              </div>
+              {edu.description && (
+                <div className="pt-4 border-t border-white/20 mt-4">
+                  <p className="text-sm text-gray-300 leading-relaxed">{edu.description}</p>
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -199,10 +157,11 @@ const Education = () => {
             >
               <div className="flex flex-col items-center text-center">
                 <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <i className={`${cert.icon} text-2xl text-white`}></i>
+                  <i className="ri-medal-line text-2xl text-white"></i>
                 </div>
-                <h4 className="text-xl font-bold text-white mb-2">{cert.name}</h4>
-                <p className="text-xs text-gray-300 leading-tight">{cert.full}</p>
+                <h4 className="text-xl font-bold text-white mb-2">{cert.title}</h4>
+                <p className="text-sm text-purple-200 mb-1">{cert.issuer}</p>
+                <p className="text-xs text-gray-300">{cert.year}</p>
               </div>
             </div>
           ))}
@@ -271,4 +230,4 @@ const Education = () => {
   );
 };
 
-export default Education;
+export default TimelineSection;

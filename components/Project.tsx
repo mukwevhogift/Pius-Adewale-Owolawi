@@ -1,13 +1,71 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { createClient } from "@/lib/supabase/client";
+import { ResearchArea } from "@/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Projects = () => {
+  const [researchAreas, setResearchAreas] = useState<ResearchArea[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  // Detect touch device
   useEffect(() => {
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const supabase = createClient();
+      
+      const { data } = await supabase
+        .from("research_areas")
+        .select("*")
+        .order("order_index");
+
+      if (data) setResearchAreas(data);
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  // Auto-scroll on hover or auto-play on touch devices
+  useEffect(() => {
+    if ((!isHovering && !isTouchDevice) || !scrollRef.current) return;
+
+    const scrollContainer = scrollRef.current;
+    let animationId: number;
+    const scrollSpeed = 1;
+
+    const autoScroll = () => {
+      if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
+        scrollContainer.scrollLeft = 0;
+      } else {
+        scrollContainer.scrollLeft += scrollSpeed;
+      }
+      animationId = requestAnimationFrame(autoScroll);
+    };
+
+    // Auto-play on touch devices, hover-activated on desktop
+    if (isTouchDevice || isHovering) {
+      animationId = requestAnimationFrame(autoScroll);
+    }
+
+    return () => {
+      if (animationId) cancelAnimationFrame(animationId);
+    };
+  }, [isHovering, isTouchDevice]);
+
+  useEffect(() => {
+    if (loading || researchAreas.length === 0) return;
+
     gsap.from("#projects h2", {
       y: 50,
       duration: 0.1,
@@ -20,101 +78,28 @@ const Projects = () => {
       },
     });
 
-    const horizontalContainer = document.querySelector(".horizontal-container");
+    gsap.from(".project-card", {
+      scale: 0.9,
+      opacity: 0,
+      duration: 0.3,
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: "#projects",
+        start: "top 70%",
+      },
+    });
+  }, [loading, researchAreas]);
 
-    if (horizontalContainer) {
-      const scrollWidth = horizontalContainer.scrollWidth;
-      const viewportWidth = window.innerWidth;
-
-      gsap.to(horizontalContainer, {
-        x: -(scrollWidth - viewportWidth),
-        ease: "none",
-        scrollTrigger: {
-          trigger: "#projects",
-          start: "top top",
-          end: () => `+=${scrollWidth}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-        },
-      });
-    }
-  }, []);
-
-  const researchAreas = [
-    {
-      title: "Artificial Intelligence & Machine Learning",
-      icon: "ri-brain-line",
-      color: "from-blue-500 to-cyan-500",
-      projects: [
-        "Human activity recognition & biomedical imaging",
-        "Transfer learning & ensemble models (GANs, VAE, CycleGAN)",
-        "Transformer-based NLP for African languages",
-        "Hybrid LSTM-CNN for medical diagnosis",
-        "Domain adaptation for EEG classification"
-      ]
-    },
-    {
-      title: "Wireless & Optical Communications",
-      icon: "ri-signal-tower-line",
-      color: "from-purple-500 to-pink-500",
-      projects: [
-        "Radio frequency propagation modeling",
-        "Advanced FSO/RF hybrid systems",
-        "Reconfigurable Intelligent Surfaces (RIS) for 6G",
-        "UAV-assisted wireless energy harvesting",
-        "mmWave, Ka/V bands channel modeling"
-      ]
-    },
-    {
-      title: "Renewable Energy & Smart Grid",
-      icon: "ri-leaf-line",
-      color: "from-green-500 to-emerald-500",
-      projects: [
-        "PV, wind, and hybrid system modeling",
-        "Demand-side management (DSM)",
-        "Fault detection in PV modules using vision",
-        "IoT-enabled load management",
-        "AI-driven renewable resource forecasting"
-      ]
-    },
-    {
-      title: "Computer Vision & Intelligent Systems",
-      icon: "ri-eye-line",
-      color: "from-orange-500 to-red-500",
-      projects: [
-        "2D-to-3D image reconstruction",
-        "Object detection (YOLO v5-v9)",
-        "Plant disease identification",
-        "Livestock monitoring systems",
-        "Cloud-based license plate recognition"
-      ]
-    },
-    {
-      title: "IoT & Edge Computing",
-      icon: "ri-router-line",
-      color: "from-indigo-500 to-purple-500",
-      projects: [
-        "Spectrum optimization & energy-efficient routing",
-        "Internet of Remote Things (IoRT)",
-        "Smart aquaponics & remote weather monitoring",
-        "UAV-based inspection frameworks",
-        "Fog-cloud hybrid architectures"
-      ]
-    },
-    {
-      title: "Robotics & Embedded Systems",
-      icon: "ri-robot-line",
-      color: "from-pink-500 to-rose-500",
-      projects: [
-        "IoT-integrated embedded control systems",
-        "Drone-based image acquisition for agriculture",
-        "Smart mobility aids for visually impaired",
-        "Virtual labs & remote robotics simulation",
-        "Brain-controlled robotic systems (EEG/BCI)"
-      ]
-    }
-  ];
+  if (loading) {
+    return (
+      <section className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-blue-900 flex items-center justify-center">
+        <div className="text-center">
+          <i className="ri-loader-4-line text-5xl text-white animate-spin mb-4"></i>
+          <p className="text-white">Loading research areas...</p>
+        </div>
+      </section>
+    );
+  }
 
   const industrialProjects = [
     {
@@ -156,37 +141,90 @@ const Projects = () => {
   ];
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-16 overflow-hidden" id="projects">
-      <div className="px-4 md:px-16 mb-12">
-        <h2 className="text-7xl font-500 bebas-neue-regular text-white mb-4">
+    <section className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-12 md:py-16" id="projects">
+      <div className="px-4 md:px-16 mb-8 md:mb-12">
+        <h2 className="text-5xl md:text-6xl lg:text-7xl font-500 bebas-neue-regular text-white mb-3 md:mb-4">
           Research & Projects
         </h2>
-        <p className="text-xl text-gray-300 max-w-3xl">
+        <p className="text-base md:text-xl text-gray-300 max-w-3xl mb-4 md:mb-6">
           Leading cutting-edge research across AI, wireless communications, renewable energy, and smart systems with over 200 peer-reviewed publications and R94M+ in secured funding.
+        </p>
+        <p className="text-xs md:text-sm text-blue-300 flex items-center gap-2">
+          {isTouchDevice ? (
+            <>
+              <i className="ri-drag-move-line"></i>
+              Auto-scrolling carousel - swipe to control
+            </>
+          ) : (
+            <>
+              <i className="ri-mouse-line"></i>
+              Hover over the carousel to auto-scroll
+            </>
+          )}
         </p>
       </div>
 
-      {/* Horizontal Scrolling Research Areas */}
-      <div className="horizontal-container flex gap-6 px-4 md:px-16">
-        {researchAreas.map((area, index) => (
-          <div
-            key={index}
-            className="project-card min-w-[400px] md:min-w-[500px] bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all"
-          >
-            <div className={`w-16 h-16 bg-gradient-to-br ${area.color} rounded-full flex items-center justify-center mb-6`}>
-              <i className={`${area.icon} text-3xl text-white`}></i>
-            </div>
-            <h3 className="text-3xl font-bold text-white mb-6">{area.title}</h3>
-            <div className="space-y-3">
-              {area.projects.map((project, idx) => (
-                <div key={idx} className="flex items-start gap-3">
-                  <i className="ri-arrow-right-s-line text-blue-400 text-xl mt-1"></i>
-                  <p className="text-gray-300">{project}</p>
+      {/* Horizontal Scrolling Research Areas Carousel */}
+      <div className="relative mb-12 md:mb-20">
+        <div 
+          ref={scrollRef}
+          onMouseEnter={() => !isTouchDevice && setIsHovering(true)}
+          onMouseLeave={() => !isTouchDevice && setIsHovering(false)}
+          className="flex gap-4 md:gap-6 px-4 md:px-16 overflow-x-auto scrollbar-hide touch-pan-x"
+          style={{ scrollBehavior: 'smooth' }}
+        >
+          {researchAreas.map((area, index) => {
+            const projects = typeof area.projects === 'string' 
+              ? JSON.parse(area.projects) 
+              : area.projects;
+
+            return (
+              <div
+                key={index}
+                className="project-card min-w-[280px] sm:min-w-[350px] md:min-w-[450px] bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 md:p-8 hover:bg-white/15 transition-all flex-shrink-0 active:scale-[0.98]"
+              >
+                <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${area.gradient_colors} rounded-full flex items-center justify-center mb-4 md:mb-6`}>
+                  <i className={`${area.icon_class} text-2xl md:text-3xl text-white`}></i>
                 </div>
-              ))}
-            </div>
-          </div>
-        ))}
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6 leading-tight">{area.title}</h3>
+                <ul className="space-y-2 md:space-y-3">
+                  {projects.map((project: string, idx: number) => (
+                    <li key={idx} className="flex items-start gap-2 md:gap-3 text-gray-200 text-sm md:text-base">
+                      <i className="ri-arrow-right-s-line text-blue-300 text-lg md:text-xl mt-0.5 flex-shrink-0"></i>
+                      <span>{project}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+          {/* Duplicate items for seamless loop */}
+          {researchAreas.map((area, index) => {
+            const projects = typeof area.projects === 'string' 
+              ? JSON.parse(area.projects) 
+              : area.projects;
+
+            return (
+              <div
+                key={`dup-${index}`}
+                className="project-card min-w-[350px] md:min-w-[450px] bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all flex-shrink-0"
+              >
+                <div className={`w-16 h-16 bg-gradient-to-br ${area.gradient_colors} rounded-full flex items-center justify-center mb-6`}>
+                  <i className={`${area.icon_class} text-3xl text-white`}></i>
+                </div>
+                <h3 className="text-3xl font-bold text-white mb-6">{area.title}</h3>
+                <ul className="space-y-3">
+                  {projects.map((project: string, idx: number) => (
+                    <li key={idx} className="flex items-start gap-3 text-gray-200">
+                      <i className="ri-arrow-right-s-line text-blue-300 text-xl mt-0.5 flex-shrink-0"></i>
+                      <span>{project}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Industrial Projects Grid */}
