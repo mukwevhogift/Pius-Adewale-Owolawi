@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -47,7 +48,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 relative">
+      {/* Back to Home Button - Top Left */}
+      <Link 
+        href="/"
+        className="absolute top-6 left-6 flex items-center gap-2 text-white/80 hover:text-white transition-colors group"
+      >
+        <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all">
+          <i className="ri-arrow-left-line text-xl"></i>
+        </div>
+        <span className="font-medium hidden sm:inline">Back to Home</span>
+      </Link>
+
       <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
         <div className="text-center mb-8">
           <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -120,6 +132,17 @@ export default function LoginPage() {
 
         <div className="mt-6 text-center text-sm text-gray-600">
           <p>Protected by Supabase Authentication</p>
+        </div>
+
+        {/* Back to Home Link - Bottom */}
+        <div className="mt-6 text-center">
+          <Link 
+            href="/"
+            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            <i className="ri-home-line"></i>
+            Visit Public Portfolio
+          </Link>
         </div>
       </div>
     </div>
