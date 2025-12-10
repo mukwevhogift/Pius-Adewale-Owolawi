@@ -3,11 +3,19 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 const AdminNav = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const supabase = createClient();
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.push("/login");
+    router.refresh();
+  };
 
   const navItems = [
     { href: "/admin/dashboard", label: "Dashboard", icon: "ri-dashboard-line" },
@@ -102,18 +110,16 @@ const AdminNav = () => {
         </Link>
 
         {/* Sign Out */}
-        <form action="/api/auth/signout" method="POST">
-          <button
-            type="submit"
-            className={`w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors ${
-              isCollapsed ? "justify-center" : ""
-            }`}
-            title={isCollapsed ? "Sign Out" : ""}
-          >
-            <i className="ri-logout-box-line text-xl"></i>
-            {!isCollapsed && <span className="text-sm font-medium">Sign Out</span>}
-          </button>
-        </form>
+        <button
+          onClick={handleSignOut}
+          className={`w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors ${
+            isCollapsed ? "justify-center" : ""
+          }`}
+          title={isCollapsed ? "Sign Out" : ""}
+        >
+          <i className="ri-logout-box-line text-xl"></i>
+          {!isCollapsed && <span className="text-sm font-medium">Sign Out</span>}
+        </button>
       </div>
     </aside>
   );

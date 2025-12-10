@@ -10,5 +10,6 @@ export async function POST(request: Request) {
                  process.env.NEXT_PUBLIC_SITE_URL || 
                  'http://localhost:3000';
   
-  return NextResponse.redirect(new URL("/login", origin));
+  // Use 303 See Other to redirect POST to GET
+  return NextResponse.redirect(new URL("/login", origin), 303);
 }
