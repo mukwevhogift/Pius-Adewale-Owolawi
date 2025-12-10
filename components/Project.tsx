@@ -183,8 +183,8 @@ const Projects = () => {
                 key={index}
                 className="project-card min-w-[280px] sm:min-w-[350px] md:min-w-[450px] bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 md:p-8 hover:bg-white/15 transition-all flex-shrink-0 active:scale-[0.98]"
               >
-                <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${area.gradient_colors} rounded-full flex items-center justify-center mb-4 md:mb-6`}>
-                  <i className={`${area.icon_class} text-2xl md:text-3xl text-white`}></i>
+                <div className={`w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br ${area.color} rounded-full flex items-center justify-center mb-4 md:mb-6`}>
+                  <i className={`${area.icon} text-2xl md:text-3xl text-white`}></i>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6 leading-tight">{area.title}</h3>
                 <ul className="space-y-2 md:space-y-3">
@@ -209,8 +209,8 @@ const Projects = () => {
                 key={`dup-${index}`}
                 className="project-card min-w-[350px] md:min-w-[450px] bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all flex-shrink-0"
               >
-                <div className={`w-16 h-16 bg-gradient-to-br ${area.gradient_colors} rounded-full flex items-center justify-center mb-6`}>
-                  <i className={`${area.icon_class} text-3xl text-white`}></i>
+                <div className={`w-16 h-16 bg-gradient-to-br ${area.color} rounded-full flex items-center justify-center mb-6`}>
+                  <i className={`${area.icon} text-3xl text-white`}></i>
                 </div>
                 <h3 className="text-3xl font-bold text-white mb-6">{area.title}</h3>
                 <ul className="space-y-3">

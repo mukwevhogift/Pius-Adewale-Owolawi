@@ -65,10 +65,12 @@ export interface Speech {
 export interface ResearchArea {
   id: string;
   title: string;
-  icon_class: string;
-  gradient_colors: string;
+  icon: string;
+  color: string;
+  description?: string | null;
   projects: string[] | string; // Can be JSON string or array
   order_index: number;
+  is_active?: boolean;
   created_at?: string;
   updated_at?: string;
 }
@@ -76,9 +78,11 @@ export interface ResearchArea {
 export interface Achievement {
   id: string;
   title: string;
-  icon_class: string;
-  gradient_colors: string;
+  count?: string;
+  icon: string;
+  color: string;
   details: string[] | string; // Can be JSON string or array
+  category?: string;
   order_index: number;
   created_at?: string;
   updated_at?: string;

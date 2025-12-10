@@ -141,8 +141,8 @@ const WhatHaveDone = () => {
               key={index}
               className="achievement-card min-w-[280px] sm:min-w-[350px] md:min-w-[450px] bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 md:p-8 hover:bg-white/15 transition-all flex-shrink-0 active:scale-[0.98]"
             >
-              <div className={`w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br ${achievement.gradient_colors} rounded-full flex items-center justify-center mb-4 md:mb-6`}>
-                <i className={`${achievement.icon_class} text-3xl md:text-4xl text-white`}></i>
+              <div className={`w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br ${achievement.color} rounded-full flex items-center justify-center mb-4 md:mb-6`}>
+                <i className={`${achievement.icon} text-3xl md:text-4xl text-white`}></i>
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6 leading-tight">{achievement.title}</h3>
               <div className="space-y-2 md:space-y-3">
@@ -167,8 +167,8 @@ const WhatHaveDone = () => {
               key={`dup-${index}`}
               className="achievement-card min-w-[280px] sm:min-w-[350px] md:min-w-[450px] bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 md:p-8 hover:bg-white/15 transition-all flex-shrink-0 active:scale-[0.98]"
             >
-              <div className={`w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br ${achievement.gradient_colors} rounded-full flex items-center justify-center mb-4 md:mb-6`}>
-                <i className={`${achievement.icon_class} text-3xl md:text-4xl text-white`}></i>
+              <div className={`w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br ${achievement.color} rounded-full flex items-center justify-center mb-4 md:mb-6`}>
+                <i className={`${achievement.icon} text-3xl md:text-4xl text-white`}></i>
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6 leading-tight">{achievement.title}</h3>
               <div className="space-y-2 md:space-y-3">
