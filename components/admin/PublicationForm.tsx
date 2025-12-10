@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import FileUploader from "@/components/admin/FileUploader";
+import Toast from "@/components/admin/Toast";
 
 interface PublicationFormProps {
   initialData?: any;
@@ -12,6 +13,7 @@ export default function PublicationForm({ initialData }: PublicationFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
   
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
@@ -88,10 +90,22 @@ export default function PublicationForm({ initialData }: PublicationFormProps) {
         throw new Error(responseData.error || "Failed to save publication");
       }
 
-      router.push("/admin/publications");
-      router.refresh();
+      setToast({
+        message: `Publication ${initialData ? 'updated' : 'created'} successfully!`,
+        type: 'success'
+      });
+
+      // Wait a moment to show the toast, then navigate
+      setTimeout(() => {
+        router.push("/admin/publications");
+        router.refresh();
+      }, 1000);
     } catch (err: any) {
       setError(err.message || "Failed to save publication. Please try again.");
+      setToast({
+        message: err.message || "Failed to save publication",
+        type: 'error'
+      });
       console.error("Save error:", err);
     } finally {
       setLoading(false);
@@ -99,13 +113,14 @@ export default function PublicationForm({ initialData }: PublicationFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {error && (
-        <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
-          <i className="ri-error-warning-line"></i>
-          {error}
-        </div>
-      )}
+    <>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {error && (
+          <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex items-center gap-2">
+            <i className="ri-error-warning-line"></i>
+            {error}
+          </div>
+        )}
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -306,5 +321,15 @@ export default function PublicationForm({ initialData }: PublicationFormProps) {
         </button>
       </div>
     </form>
+
+    {toast && (
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={true}
+        onClose={() => setToast(null)}
+      />
+    )}
+  </>
   );
 }

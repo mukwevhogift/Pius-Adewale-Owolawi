@@ -122,10 +122,12 @@ const TimelineSection = () => {
                   {/* Icon & Year */}
                   <div className="flex-shrink-0 flex flex-col items-center">
                     <div className="relative w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300 z-10">
-                      <i className="ri-graduation-cap-fill text-4xl text-white"></i>
+                      <i className={`${edu.icon} text-4xl text-white`}></i>
                     </div>
                     <div className="mt-4 bg-gray-100 px-4 py-2 rounded-full">
-                      <span className="text-gray-700 font-bold text-sm">{edu.year}</span>
+                      <span className="text-gray-700 font-bold text-sm">
+                        {edu.year_end ? `${edu.year_start}-${edu.year_end}` : edu.year_start}
+                      </span>
                     </div>
                   </div>
 
@@ -136,10 +138,19 @@ const TimelineSection = () => {
                         <h3 className="text-2xl font-bold text-gray-900 mb-2">
                           {edu.degree}
                         </h3>
-                        <div className="flex items-center gap-2 text-blue-600">
+                        <div className="flex items-center gap-2 text-blue-600 mb-2">
                           <i className="ri-building-line text-lg"></i>
                           <p className="text-lg font-medium">{edu.institution}</p>
                         </div>
+                        <div className="flex items-center gap-2 text-gray-600">
+                          <i className="ri-map-pin-line text-sm"></i>
+                          <p className="text-sm">{edu.country}</p>
+                        </div>
+                        {edu.specialization && (
+                          <p className="text-sm text-gray-600 mt-2">
+                            <span className="font-semibold">Specialization:</span> {edu.specialization}
+                          </p>
+                        )}
                       </div>
                       <div className="hidden md:block">
                         <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center">
@@ -147,10 +158,6 @@ const TimelineSection = () => {
                         </div>
                       </div>
                     </div>
-
-                    {edu.description && (
-                      <p className="text-gray-600 leading-relaxed">{edu.description}</p>
-                    )}
                   </div>
                 </div>
               </div>
@@ -184,8 +191,8 @@ const TimelineSection = () => {
                   <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
                     <i className="ri-medal-fill text-3xl text-white"></i>
                   </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{cert.title}</h4>
-                  <p className="text-sm text-purple-600 font-medium mb-1">{cert.issuer}</p>
+                  <h4 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{cert.name}</h4>
+                  <p className="text-sm text-purple-600 font-medium mb-1">{cert.issued_by}</p>
                   <p className="text-xs text-gray-500 font-semibold">{cert.year}</p>
                 </div>
               </div>

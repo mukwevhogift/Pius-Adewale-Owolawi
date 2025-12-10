@@ -1,14 +1,15 @@
 // Database Types
 export interface HeroSection {
   id: string;
-  name: string;
   title: string;
-  credentials: string;
-  profile_image_url: string | null;
-  stat_1_value: string;
-  stat_1_label: string;
-  stat_2_value: string;
-  stat_2_label: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  image_url: string | null;
+  stats: {
+    publications: number;
+    funding: string;
+  } | string; // Can be JSON string or object
   created_at?: string;
   updated_at?: string;
 }
@@ -17,18 +18,26 @@ export interface EducationItem {
   id: string;
   degree: string;
   institution: string;
-  year: string;
-  description: string | null;
+  country: string;
+  year_start: string;
+  year_end: string | null;
+  specialization: string;
+  icon: string;
+  color: string;
+  bg_color: string;
   order_index: number;
+  is_ongoing: boolean;
   created_at?: string;
   updated_at?: string;
 }
 
 export interface CertificationItem {
   id: string;
-  title: string;
-  issuer: string;
-  year: string;
+  name: string;
+  full_name: string;
+  icon: string;
+  issued_by: string | null;
+  year: string | null;
   order_index: number;
   created_at?: string;
   updated_at?: string;
@@ -123,12 +132,14 @@ export interface GalleryImage {
 
 export interface Testimonial {
   id: string;
-  name: string;
+  quote: string;
+  author: string;
   role: string;
-  organization: string;
-  content: string;
+  organization: string | null;
+  icon: string;
   image_url: string | null;
   order_index: number;
+  is_active: boolean;
   created_at?: string;
   updated_at?: string;
 }
@@ -137,9 +148,10 @@ export interface CommunityInitiative {
   id: string;
   title: string;
   description: string;
-  year: string;
-  impact: string | null;
+  icon: string;
+  color: string;
   order_index: number;
+  is_active: boolean;
   created_at?: string;
   updated_at?: string;
 }

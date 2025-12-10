@@ -140,7 +140,7 @@ const Hero = () => {
                                 {heroData.name}
                             </h1>
                             <p className="text-xl sm:text-2xl text-blue-200 font-light leading-relaxed">
-                                {heroData.credentials}
+                                {heroData.subtitle}
                             </p>
                         </div>
 
@@ -148,15 +148,15 @@ const Hero = () => {
                         <div className="grid grid-cols-2 gap-4 pt-6">
                             <div className="group bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:border-blue-400/30 transition-all hover:scale-105">
                                 <div className="text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
-                                    {heroData.stat_1_value}
+                                    {typeof heroData.stats === 'string' ? JSON.parse(heroData.stats).publications : heroData.stats.publications}
                                 </div>
-                                <p className="text-sm text-gray-300 mt-2">{heroData.stat_1_label}</p>
+                                <p className="text-sm text-gray-300 mt-2">Publications</p>
                             </div>
                             <div className="group bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:border-purple-400/30 transition-all hover:scale-105">
                                 <div className="text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">
-                                    {heroData.stat_2_value}
+                                    {typeof heroData.stats === 'string' ? JSON.parse(heroData.stats).funding : heroData.stats.funding}
                                 </div>
-                                <p className="text-sm text-gray-300 mt-2">{heroData.stat_2_label}</p>
+                                <p className="text-sm text-gray-300 mt-2">Research Funding</p>
                             </div>
                         </div>
 
@@ -196,7 +196,7 @@ const Hero = () => {
                             <div className="relative w-full max-w-md lg:max-w-lg">
                                 <div className="aspect-[3/4] rounded-3xl overflow-hidden border-4 border-white/10 shadow-2xl">
                                     <img
-                                        src={heroData.profile_image_url || "/img/prof-owolawi.jpg"}
+                                        src={heroData.image_url || "/img/prof-owolawi.jpg"}
                                         className="w-full h-full object-cover object-top transform group-hover:scale-105 transition-transform duration-500"
                                         alt={heroData.name}
                                     />

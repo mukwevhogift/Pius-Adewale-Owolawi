@@ -123,7 +123,7 @@ const RecommendationText = () => {
                 <div className="mb-6">
                   <img 
                     src={testimonial.image_url} 
-                    alt={testimonial.name}
+                    alt={testimonial.author}
                     className="w-16 h-16 rounded-full object-cover border-4 border-blue-100"
                   />
                 </div>
@@ -135,12 +135,12 @@ const RecommendationText = () => {
               
               {/* Testimonial Content */}
               <blockquote className="text-gray-700 italic mb-6 leading-relaxed">
-                &ldquo;{testimonial.content}&rdquo;
+                &ldquo;{testimonial.quote}&rdquo;
               </blockquote>
               
               {/* Author Info */}
               <div className="border-t pt-4">
-                <p className="font-bold text-gray-900">{testimonial.name}</p>
+                <p className="font-bold text-gray-900">{testimonial.author}</p>
                 <p className="text-sm text-gray-600">{testimonial.role}</p>
                 <p className="text-xs text-gray-500">{testimonial.organization}</p>
               </div>

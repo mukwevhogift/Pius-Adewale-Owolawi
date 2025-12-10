@@ -23,6 +23,21 @@ DELETE FROM professional_memberships;
 DELETE FROM awards;
 DELETE FROM certifications;
 DELETE FROM education;
+DELETE FROM hero_section;
+
+-- =====================================================
+-- HERO SECTION
+-- =====================================================
+
+INSERT INTO hero_section (title, name, subtitle, description, image_url, stats) VALUES
+(
+    'Distinguished Professor & Research Chair',
+    'Prof. Pius Adewale Owolawi',
+    'Leading Fourth Industrial Revolution (4IR) Education & Research',
+    'Award-winning engineer, educator, and innovation leader driving transformational research in AI, wireless communications, and smart systems. SARChI Research Chair for Fourth Industrial Revolution Skills, Education & Training.',
+    '/img/prof-owolawi.jpg',
+    '{"publications": 200, "funding": "R94M+"}'
+);
 
 -- =====================================================
 -- EDUCATION
@@ -355,7 +370,7 @@ INSERT INTO gallery_images (title, image_url, alt_text, category, order_index) V
 
 INSERT INTO site_settings (key, value) VALUES
 ('site_title', '"Prof. Pius Owolawi - Distinguished Professor & 4IR Research Leader"'),
-('contact_email', '"admin@piusowolawi.ac.za"'),
+('contact_email', '"p.owolawi@gmail.com"'),
 ('social_links', '{"linkedin": "https://linkedin.com/in/piusowolawi", "twitter": "https://twitter.com/piusowolawi", "googlescholar": "https://scholar.google.com/citations?user=xxx"}'),
 ('site_meta', '{"description": "Official portfolio of Prof. Pius Adewale Owolawi - Distinguished Professor, Engineer, and 4IR Research Leader", "keywords": ["Professor", "Engineering", "AI", "Machine Learning", "4IR", "South Africa"]}');
 
