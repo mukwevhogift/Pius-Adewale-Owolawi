@@ -5,7 +5,24 @@
 -- This file contains all the current hardcoded data from the website
 -- Run this AFTER running schema.sql
 -- 
+-- SAFE MODE: This version deletes existing data before inserting
+-- to avoid duplicate key errors
+-- 
 -- =====================================================
+
+-- Clear existing data (in reverse order of dependencies)
+DELETE FROM site_settings;
+DELETE FROM gallery_images;
+DELETE FROM testimonials;
+DELETE FROM publications;
+DELETE FROM speeches;
+DELETE FROM community_initiatives;
+DELETE FROM achievements;
+DELETE FROM research_areas;
+DELETE FROM professional_memberships;
+DELETE FROM awards;
+DELETE FROM certifications;
+DELETE FROM education;
 
 -- =====================================================
 -- EDUCATION
