@@ -8,16 +8,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
   useEffect(() => {
-    gsap.from("#footer h2, #footer p, #footer a, #footer div", {
+    gsap.from("#footer h2, #footer p, #footer a", {
       y: 30,
-      duration: 0.3,
+      duration: 0.4,
       opacity: 0,
-      stagger: 0.1,
+      stagger: 0.08,
       scrollTrigger: {
         trigger: "#footer",
-        start: "top 80%",
-        end: "bottom 90%",
-        scrub: 2,
+        start: "top 85%",
+        toggleActions: "play none none none",
       },
     });
   }, []);
@@ -116,7 +115,7 @@ const Footer = () => {
               <span>Google Scholar</span>
             </a>
             <a
-              href="https://www.researchgate.net"
+              href="https://www.researchgate.net/profile/Pius-Owolawi"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-white hover:text-blue-300 transition-colors group"
@@ -127,7 +126,7 @@ const Footer = () => {
               <span>ResearchGate</span>
             </a>
             <a
-              href="https://www.linkedin.com"
+              href="https://www.linkedin.com/in/pius-owolawi/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-white hover:text-blue-300 transition-colors group"
@@ -185,6 +184,11 @@ const Footer = () => {
           <span>PhD, ECSA, MIEEE, SAIEE</span>
           <span className="hidden md:inline">•</span>
           <span>Assistant Dean, TUT</span>
+          <span className="hidden md:inline">•</span>
+          <a href="/login" className="text-gray-500 hover:text-blue-400 transition-colors flex items-center gap-1">
+            <i className="ri-lock-line text-xs"></i>
+            Admin
+          </a>
         </div>
       </div>
     </footer>

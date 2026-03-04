@@ -1,3 +1,6 @@
+"use client";
+
+import { DataProvider } from "@/components/DataProvider";
 import Achieved from "@/components/Achieved";
 import TimelineSection from "@/components/Education";
 import Footer from "@/components/Footer";
@@ -13,19 +16,21 @@ import WhatHaveDone from "@/components/WhatHaveDone";
 
 export default function Home() {
   return (
-    <>
+    <DataProvider>
       <Preloader />
       <Navbar />
-      <Hero />
-      <TimelineSection />
-      <Publications />
-      <Speeches />
-      <Projects />
-      <WhatHaveDone />
-      <Achieved />
-      <Gallery />
-      <RecommendationText />
+      <main id="main-content">
+        <Hero />
+        <TimelineSection />
+        <WhatHaveDone />
+        <Projects />
+        <Publications />
+        <Speeches />
+        <Gallery />
+        <Achieved />
+        <RecommendationText />
+      </main>
       <Footer />
-    </>
+    </DataProvider>
   );
 }

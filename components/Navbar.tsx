@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -17,7 +16,8 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { href: "", label: "Home" },
+    { href: "#", label: "Home" },
+    { href: "#education", label: "Academic Journey" },
     { href: "#what-done", label: "Achievements" },
     { href: "#projects", label: "Research" },
     { href: "#publications", label: "Publications" },
@@ -36,25 +36,24 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo/Name */}
-          <Link
-            href="/"
-            className="flex items-center gap-3 group"
+          {/* Logo/Name - TC-01: Non-clickable, cursor-default */}
+          <div
+            className="flex items-center gap-3 cursor-default select-none"
           >
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-lg md:text-xl">PA</span>
             </div>
             <div className="hidden sm:block">
               <div className="text-gray-900 font-bold text-lg md:text-xl">Prof. Pius Owolawi</div>
               <div className="text-blue-600 text-xs md:text-sm font-medium">Research & Innovation</div>
             </div>
-          </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
-                key={link.href}
+                key={link.href + link.label}
                 href={link.href}
                 className="text-gray-700 hover:text-blue-600 transition-colors text-sm font-semibold relative group"
               >
@@ -64,17 +63,8 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Admin Login Button */}
+          {/* Mobile Menu Button - TC-06: Admin button removed */}
           <div className="flex items-center gap-4">
-            <Link
-              href="/login"
-              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all hover:shadow-xl hover:scale-105 text-sm font-semibold"
-            >
-              <i className="ri-admin-line text-lg"></i>
-              <span className="hidden sm:inline">Admin</span>
-            </Link>
-
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden text-gray-700 p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -87,7 +77,6 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      {/* Mobile Menu */}
       <div
         className={`lg:hidden transition-all duration-300 overflow-hidden ${
           isMobileMenuOpen ? "max-h-screen" : "max-h-0"
@@ -97,7 +86,7 @@ const Navbar = () => {
           <div className="px-4 py-4 space-y-2">
             {navLinks.map((link) => (
               <a
-                key={link.href}
+                key={link.href + link.label}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors text-sm font-semibold"

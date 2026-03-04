@@ -1,32 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { GalleryImage } from "@/types";
+import React from "react";
+import { usePortfolioData } from "@/components/DataProvider";
 
 const Gallery = () => {
-    const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const supabase = createClient();
-            
-            const { data } = await supabase
-                .from("gallery_images")
-                .select("*")
-                .order("order_index");
-
-            if (data) setGalleryImages(data);
-            setLoading(false);
-        };
-
-        fetchData();
-    }, []);
+    const { galleryImages, loading } = usePortfolioData();
 
     if (loading) {
         return (
-            <section className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center">
+            <section className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center">
                 <div className="text-center">
                     <i className="ri-loader-4-line text-5xl text-white animate-spin mb-4"></i>
                     <p className="text-white">Loading gallery...</p>
@@ -36,12 +18,14 @@ const Gallery = () => {
     }
 
     return (
-        <section className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-16">
-            <div className="container mx-auto px-4 md:px-16">
+        <section className="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 py-16 scroll-mt-24" id="gallery">
+            <div className="container mx-auto px-4 md:px-8 lg:px-16">
                 <div className="mb-12">
-                    <h2 className="text-6xl font-500 bebas-neue-regular text-white mb-4">
-                        Visual Gallery
-                    </h2>
+                    <a href="#gallery" className="inline-block">
+                        <h2 className="text-6xl font-500 bebas-neue-regular text-white mb-4 hover:text-blue-300 transition-colors">
+                            Visual Gallery
+                        </h2>
+                    </a>
                     <p className="text-xl text-gray-300">
                         Documenting research events, conferences, and academic milestones
                     </p>
