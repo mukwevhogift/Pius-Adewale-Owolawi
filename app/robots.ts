@@ -6,9 +6,9 @@ export default function robots(): MetadataRoute.Robots {
             {
                 userAgent: '*',
                 allow: '/',
-                disallow: ['/api/', '/_next/'],
+                disallow: ['/api/', '/admin/', '/login/', '/_next/'],
             },
         ],
-        sitemap: 'https://piusowolawi.com/sitemap.xml',
+        sitemap: 'https://www.piusowolawi.com/sitemap.xml',
     }
 }

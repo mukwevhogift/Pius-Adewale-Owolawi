@@ -81,6 +81,18 @@ const Hero = () => {
 
     return (
         <>
+            {/* SEO: Static H1 for crawlers — always present regardless of Supabase data */}
+            <h1 className="sr-only">
+                Prof. Pius Adewale Owolawi – Leading AI &amp; 4IR Researcher | Tshwane University of Technology
+            </h1>
+            <noscript>
+                <div style={{ padding: '2rem', textAlign: 'center', background: '#0f172a', color: '#fff' }}>
+                    <h1>Prof. Pius Adewale Owolawi – Leading AI &amp; 4IR Researcher</h1>
+                    <p>Distinguished Professor of Telecommunication &amp; IT | Assistant Dean | Tshwane University of Technology, South Africa</p>
+                    <p>200+ publications | 2000+ citations | R94M+ research funding | Top 500 African Researcher</p>
+                </div>
+            </noscript>
+
             {/* ═══════════ HERO SECTION ═══════════ */}
             <section className="min-h-screen flex items-center px-4 md:px-8 lg:px-16 bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 pt-24 md:pt-28 pb-16 relative overflow-hidden">
                 {/* Background blobs */}
@@ -98,9 +110,10 @@ const Hero = () => {
                         </div>
 
                         <div>
-                            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-none mb-4 tracking-tight" id="hero-name">
+                            {/* Visual heading — h2 since the static sr-only h1 is above */}
+                            <h2 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-none mb-4 tracking-tight" id="hero-name">
                                 {heroData.name}
-                            </h1>
+                            </h2>
                             <p className="text-xl sm:text-2xl text-blue-200 font-light leading-relaxed">
                                 {heroData.subtitle}
                             </p>
