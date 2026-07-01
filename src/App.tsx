@@ -37,6 +37,7 @@ import MentorshipSection from "./components/MentorshipSection";
 import ConsultingSpeakingSection from "./components/ConsultingSpeakingSection";
 import MediaResourcesSection from "./components/MediaResourcesSection";
 import AIChatWidget from "./components/AIChatWidget";
+import SoshanguveMap from "./components/SoshanguveMap";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>("home");
@@ -326,13 +327,8 @@ export default function App() {
                 {/* Soshanguve South map representation card */}
                 <div className="rounded-xl border border-slate-200 bg-white p-4 text-center text-xs space-y-3 font-mono shadow-sm">
                   <span className="text-blue-600 font-bold block uppercase tracking-wider text-[10px]">Pretoria Geographic Hub</span>
-                  <div className="aspect-video w-full relative rounded-lg bg-slate-50 overflow-hidden flex items-center justify-center border border-slate-200/80">
-                    <div className="absolute inset-0 bg-white/45 opacity-55 animate-pulse" />
-                    <div className="relative text-center z-10 px-4 space-y-1.5 font-sans">
-                      <MapPin className="h-6 w-6 text-blue-600 mx-auto" />
-                      <span className="block text-slate-900 font-bold font-mono">Soshanguve Campus Grid</span>
-                      <span className="block text-[10px] text-slate-400 font-mono text-center">Coords: 25.5398° S, 28.0931° E</span>
-                    </div>
+                  <div className="aspect-video w-full relative rounded-lg bg-slate-50 overflow-hidden border border-slate-200/80 z-0">
+                    <SoshanguveMap />
                   </div>
                 </div>
               </div>
