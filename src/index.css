@@ -1,0 +1,290 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-display: "Bebas Neue", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-900: #1e3a8a;
+  --color-blue-950: #0c2d57;
+  
+  --color-purple-50: #faf5ff;
+  --color-purple-400: #d8b4fe;
+  --color-purple-600: #9333ea;
+  
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+  
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-700: #374151;
+  --color-gray-900: #111827;
+}
+
+/* Custom Scrollbar Styles to match Light/White Palette */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f8f8f8;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
+/* -------------------------------------------------------------
+   GLOBAL PROFESSIONAL POLISH PALETTE OVERRIDES 
+   ------------------------------------------------------------- */
+
+html, body {
+  background-color: #f8f8f8 !important;
+  color: #222222 !important;
+  font-family: "Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* All Headings / Sections titles (H1 and H2) should use display Bebas Neue font */
+h1, h2, .font-display, .bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+}
+
+/* Card and subheadings should use Montserrat body font or Inter */
+h3, h4, h5, h6 {
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Utility Inter Class */
+.inter {
+  font-family: "Inter", sans-serif;
+}
+
+/* Convert all dark-mode background colors to elegant executive light cards */
+.bg-\[\#07111D\],
+.bg-\[\#07111d\] {
+  background-color: #f8f8f8 !important;
+}
+
+.bg-\[\#0E1623\],
+.bg-\[\#0E1623\]\/40,
+.bg-\[\#0E1623\]\/60,
+.bg-\[\#0a1628\],
+.bg-\[\#0A1628\]\/60,
+.bg-\[\#0A1628\]\/45,
+.bg-\[\#0d1623\],
+.bg-\[\#0D1623\] {
+  background-color: #ffffff !important;
+  color: #222222 !important;
+  border-color: #e5e7eb !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+
+/* Convert Dark Borders to elegant crisp slate line separators */
+.border-\[\#2E3A4A\]\/20,
+.border-\[\#2E3A4A\]\/25,
+.border-\[\#2E3A4A\]\/30,
+.border-\[\#2E3A4A\]\/40,
+.border-\[\#2E3A4A\] {
+  border-color: #e5e7eb !important;
+}
+
+/* Special styling for the premium hero section overlay */
+.bg-\[\#0E1E34\] {
+  background: linear-gradient(135deg, #020617 0%, #0c2d57 50%, #1e293b 100%) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.bg-\[\#0E1E34\] h1,
+.bg-\[\#0E1E34\] h2,
+.bg-\[\#0E1E34\] .text-white {
+  color: #ffffff !important;
+}
+
+.bg-\[\#0E1E34\] .text-gray-300 {
+  color: #cbd5e1 !important;
+}
+
+/* -------------------------------------------------------------
+   TEXT CONTRAST & TYPOGRAPHY CORRECTIONS 
+   ------------------------------------------------------------- */
+
+/* Headers, titles, and active statuses */
+.text-white,
+.group-hover\:text-white:hover {
+  color: #222222 !important;
+}
+
+/* Keep white text inside hero white */
+.bg-\[\#0E1E34\] .text-white,
+.bg-\[\#0E1E34\] h1,
+.bg-\[\#0E1E34\] h2,
+.bg-gradient-to-r .text-white {
+  color: #ffffff !important;
+}
+
+.text-gray-300,
+.text-gray-400,
+.text-slate-300,
+.text-slate-400 {
+  color: #374151 !important;
+}
+
+.text-gray-350,
+.text-gray-450 {
+  color: #475569 !important;
+}
+
+/* Convert all primary gold text items into an accessible, high-contrast brand blue */
+.text-\[\#C9A84C\] {
+  color: #2563eb !important; /* Brand Blue 600 */
+  font-weight: 600;
+}
+
+/* Highlight & badges backgrounds */
+.bg-\[\#C9A84C\]\/10,
+.bg-\[\#C9A84C\]\/5 {
+  background-color: #eff6ff !important; /* blue-50 */
+  color: #2563eb !important; /* blue-600 */
+}
+
+.border-\[\#C9A84C\]\/25,
+.border-\[\#C9A84C\]\/35 {
+  border-color: #bfdbfe !important; /* soft blue-200 border */
+}
+
+/* Pill status markers and animations badges */
+.bg-emerald-500\/5 {
+  background-color: #eff6ff !important; /* blue-50 */
+  color: #2563eb !important; /* blue-600 */
+  border-color: #bfdbfe !important;
+}
+
+.text-emerald-400 {
+  color: #2563eb !important;
+}
+
+/* -------------------------------------------------------------
+   BUTTONS AND ACTIONS TRANSLATION
+   ------------------------------------------------------------- */
+
+/* Target the solid gold/amber button selectors to render brand blue-to-purple primary buttons */
+.bg-\[\#C9A84C\],
+button.bg-\[\#C9A84C\] {
+  background: linear-gradient(135deg, #2563eb 0%, #9333ea 100%) !important; /* Blue to Purple Gradient */
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2) !important;
+}
+
+.bg-\[\#C9A84C\] svg,
+button.bg-\[\#C9A84C\] svg {
+  color: #ffffff !important;
+}
+
+.hover\:bg-\[\#C9A84C\]\/95:hover,
+button.bg-\[\#C9A84C\]:hover {
+  opacity: 0.95 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 12px -1px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Outline button styling matching specifications */
+.border-\[\#C9A84C\] {
+  border-color: #2563eb !important;
+  color: #2563eb !important;
+}
+
+.border-\[\#C9A84C\]:hover {
+  background-color: #eff6ff !important;
+}
+
+/* Clean up input labels */
+label {
+  color: #374151 !important;
+  font-weight: 500 !important;
+}
+
+/* Accessibility Focus Outline */
+:focus-visible {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+}
+
+/* -------------------------------------------------------------
+   SVG INTERACTIVE CHART THEME SHIFTS 
+   ------------------------------------------------------------- */
+
+svg line {
+  stroke: #e5e7eb !important;
+}
+
+svg path[stroke="#C9A84C"],
+svg path[stroke="#c9a84c"] {
+  stroke: #2563eb !important; /* Primary Brand Blue */
+}
+
+svg circle[stroke="#C9A84C"],
+svg circle[stroke="#c9a84c"] {
+  fill: #ffffff !important;
+  stroke: #2563eb !important;
+  stroke-width: 2.5px !important;
+}
+
+svg circle[stroke="#C9A84C"]:hover,
+svg circle[stroke="#c9a84c"]:hover {
+  fill: #9333ea !important;
+  stroke: #9333ea !important;
+}
+
+svg rect[fill="#0D1623"],
+svg rect[fill="#0E1623"],
+svg rect[fill="#0a1628"] {
+  fill: #f3f4f6 !important; /* Bar charts background */
+  stroke: #e5e7eb !important;
+}
+
+svg rect[fill="#C9A84C"],
+svg rect[fill="#c9a84c"] {
+  fill: #2563eb !important; /* Bar graph bars map directly to blue-600 */
+}
+
+svg text {
+  fill: #475569 !important;
+  font-weight: 500 !important;
+}
+
+/* -------------------------------------------------------------
+   AI FLOATING CHAT PANEL
+   ------------------------------------------------------------- */
+
+div[className*="chat-panel"] {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  color: #222222 !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
