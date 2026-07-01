@@ -27,6 +27,7 @@ app.get("/3.png", (req, res, next) => {
     path.join(process.cwd(), "src", "3.png"),
     path.join(process.cwd(), "src", "assets", "3.png"),
     path.join(process.cwd(), "assets", "3.png"),
+    path.join(process.cwd(), "assets", "img", "3.png"),
   ];
   for (const p of possiblePaths) {
     if (fs.existsSync(p)) {

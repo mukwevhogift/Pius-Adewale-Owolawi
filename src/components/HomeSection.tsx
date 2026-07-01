@@ -17,6 +17,8 @@ import {
   BookOpen
 } from "lucide-react";
 import { BIOGRAPHY_SUMMARY, PROJECTS } from "../data.js";
+// @ts-ignore
+import profileImage from "@/assets/img/3.png";
 
 interface HomeSectionProps {
   onNavigate: (tab: string) => void;
@@ -46,7 +48,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
                 {!imageError ? (
                   <div className="absolute inset-0 h-full w-full">
                     <img
-                      src="/3.png"
+                      src={profileImage}
                       alt="Prof. Pius Adewale Owolawi"
                       className="h-full w-full object-cover rounded-2xl"
                       referrerPolicy="no-referrer"
@@ -55,7 +57,7 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
                     {/* Elegant overlay for name readability */}
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent p-3 text-center">
                       <span className="block text-xs font-mono font-bold text-white uppercase tracking-wider">Prof. Pius</span>
-                      <span className="block text-[8px] font-mono text-gray-300 uppercase">Adewale Owolawi</span>
+                      <span className="block text-[8px] font-mono text-white uppercase">Adewale Owolawi</span>
                     </div>
                   </div>
                 ) : (
