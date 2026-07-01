@@ -110,7 +110,7 @@ export default function App() {
               onClick={() => handleTabChange("home")}
               className="flex items-center gap-2 group focus:outline-none"
             >
-              <div className="h-9 w-9 rounded bg-gradient-to-br from-blue-600 to-purple-600 text-white flex items-center justify-center font-bold tracking-tighter text-md border border-blue-600/20 group-hover:opacity-90 transition-all">
+              <div className="h-9 w-9 rounded bg-gradient-to-br from-blue-600 to-purple-600 text-slate-900 flex items-center justify-center font-bold tracking-tighter text-md border border-blue-600/20 group-hover:opacity-90 transition-all">
                 PO
               </div>
               <div className="text-left font-sans">

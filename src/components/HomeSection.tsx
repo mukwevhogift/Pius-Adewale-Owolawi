@@ -55,9 +55,9 @@ export default function HomeSection({ onNavigate }: HomeSectionProps) {
                       onError={() => setImageError(true)}
                     />
                     {/* Elegant overlay for name readability */}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent p-3 text-center">
-                      <span className="block text-xs font-mono font-bold text-white uppercase tracking-wider">Prof. Pius</span>
-                      <span className="block text-[8px] font-mono text-white uppercase">Adewale Owolawi</span>
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white/95 via-white/60 to-transparent p-3 text-center">
+                      <span className="block text-xs font-mono font-bold text-slate-900 uppercase tracking-wider">Prof. Pius</span>
+                      <span className="block text-[8px] font-mono text-slate-700 uppercase">Adewale Owolawi</span>
                     </div>
                   </div>
                 ) : (

@@ -70,11 +70,11 @@ export default function MentorshipSection() {
       <div className="space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-0.5">
-            <h3 className="font-sans text-xl font-bold text-white flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 bg-[#C9A84C] rounded-full" />
+            <h3 className="font-sans text-xl font-bold text-slate-900 flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 bg-blue-600 rounded-full" />
               Completed Supervision Record
             </h3>
-            <p className="text-xs text-[#7A8898]">Search and browse completed PhDs and Postdoctoral Mentorships</p>
+            <p className="text-xs text-slate-500">Search and browse completed PhDs and Postdoctoral Mentorships</p>
           </div>
 
           {/* Filtering buttons */}
@@ -128,7 +128,7 @@ export default function MentorshipSection() {
             <tbody className="divide-y divide-[#2E3A4A]/40 text-gray-300">
               {filteredStudents.length > 0 ? (
                 filteredStudents.map((st) => (
-                  <tr key={st.name} className="hover:bg-[#0D1623] transition-colors">
+                  <tr key={st.name} className="hover:bg-blue-50/60 transition-colors">
                     <td className="p-3 font-semibold text-white flex items-center gap-1.5">
                       <span className="h-1.5 w-1.5 bg-[#C9A84C] rounded-full" />
                       {st.name}
@@ -209,21 +209,21 @@ export default function MentorshipSection() {
           </div>
 
           {/* Action Call for Admissions form */}
-          <div className="md:col-span-5 rounded-xl bg-[#07111D] border border-[#2E3A4A]/40 p-5 space-y-4">
-            <span className="font-mono text-[9px] text-[#C9A84C] font-semibold tracking-wider block">OPPORTUNITIES IN PRECISENESS</span>
-            <h4 className="text-base font-bold text-white">Current Funded Scopes (2025/2026)</h4>
+          <div className="md:col-span-5 rounded-xl bg-slate-50 border border-slate-250 p-5 space-y-4">
+            <span className="font-mono text-[9px] text-blue-600 font-semibold tracking-wider block">OPPORTUNITIES IN PRECISENESS</span>
+            <h4 className="text-base font-bold text-slate-900">Current Funded Scopes (2025/2026)</h4>
             
             <div className="space-y-3.5 text-xs">
-              <div className="rounded border border-emerald-500/20 bg-emerald-500/5 p-3">
-                <span className="font-bold text-white block">UAV Precision Diagnostics</span>
-                <span className="text-[#7A8898] block mt-0.5">Project Ref: PS25TUT11 (AgriSETA Drones)</span>
-                <p className="text-gray-300 mt-1 leading-relaxed">Fully-funded MSc/PhD scopes integrating multispectral pathology scanning on subtropical maize and citrus fields with YOLO models.</p>
+              <div className="rounded border border-emerald-200 bg-emerald-50/50 p-3">
+                <span className="font-bold text-slate-900 block">UAV Precision Diagnostics</span>
+                <span className="text-slate-500 font-semibold block mt-0.5">Project Ref: PS25TUT11 (AgriSETA Drones)</span>
+                <p className="text-slate-600 mt-1 leading-relaxed">Fully-funded MSc/PhD scopes integrating multispectral pathology scanning on subtropical maize and citrus fields with YOLO models.</p>
               </div>
 
-              <div className="rounded border border-[#C9A84C]/25 bg-[#C9A84C]/5 p-3">
-                <span className="font-bold text-white block">Setswana / Sesotho Language Models</span>
-                <span className="text-[#7A8898] block mt-0.5">MICTSETA 4IR Research Chair funding lines</span>
-                <p className="text-gray-300 mt-1 leading-relaxed">PhD research tracks focused on Cross-Subject adaptation or Low-Rank LoRA tuning on local South African languages.</p>
+              <div className="rounded border border-blue-200 bg-blue-50/40 p-3">
+                <span className="font-bold text-slate-900 block">Setswana / Sesotho Language Models</span>
+                <span className="text-slate-500 font-semibold block mt-0.5">MICTSETA 4IR Research Chair funding lines</span>
+                <p className="text-slate-600 mt-1 leading-relaxed">PhD research tracks focused on Cross-Subject adaptation or Low-Rank LoRA tuning on local South African languages.</p>
               </div>
             </div>
           </div>
