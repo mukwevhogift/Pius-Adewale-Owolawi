@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Remove-Item -Confirm:$false \"C:\\\\Users\\\\Revaldo\\\\Desktop\\\\prof-portifolio\\\\public\\\\icon.svg\")",
+      "PowerShell(\"removed\")"
+    ]
+  }
+}
