@@ -340,6 +340,16 @@ export function Contact() {
     setLeaving(null);
   };
 
+  // No backend — compose the message in the visitor's email client via mailto:
+  const submitMessage = (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const subject = fd.get("subject") || `Message from ${fd.get("name")}`;
+    const body = `Name: ${fd.get("name")}\nEmail: ${fd.get("email")}\n\n${fd.get("message")}`;
+    window.location.href =
+      `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
     <footer className="contact" id="contact">
       <div className="container contact-inner">
@@ -358,28 +368,47 @@ export function Contact() {
           </div>
         </div>
 
-        <ul className="contact-list">
-          <li>
-            <Icon name="mail" size={19} />
-            <a href={`mailto:${profile.email}`}>{profile.email}</a>
-          </li>
-          <li>
-            <Icon name="phone" size={19} />
-            <a href={`tel:${profile.phones[0].replace(/\s/g, "")}`}>{profile.phones[0]}</a>
-          </li>
-          <li>
-            <Icon name="pin" size={19} />
-            <span>{profile.location}</span>
-          </li>
-          <li>
-            <Icon name="linkedin" size={19} />
-            <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-          </li>
-        </ul>
+        <div className="contact-mid">
+          <ul className="contact-list">
+            <li>
+              <Icon name="mail" size={19} />
+              <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            </li>
+            <li>
+              <Icon name="phone" size={19} />
+              <a href={`tel:${profile.phones[0].replace(/\s/g, "")}`}>{profile.phones[0]}</a>
+            </li>
+            <li>
+              <Icon name="pin" size={19} />
+              <span>{profile.location}</span>
+            </li>
+            <li>
+              <Icon name="linkedin" size={19} />
+              <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+            </li>
+            <li>
+              <Icon name="grad" size={19} />
+              <a href={profile.scholar} target="_blank" rel="noreferrer">Google Scholar</a>
+            </li>
+          </ul>
 
-        <a className="btn btn-outline-gold" href={profile.resume} download>
-          <Icon name="download" size={17} /> Download Full Resume
-        </a>
+          <a className="btn btn-outline-gold" href={profile.resume} download>
+            <Icon name="download" size={17} /> Download Full Resume
+          </a>
+        </div>
+
+        <form className="contact-form" onSubmit={submitMessage}>
+          <h3 className="contact-form-title">Send a Message</h3>
+          <div className="cf-row">
+            <input name="name" type="text" placeholder="Your Name" required aria-label="Your Name" />
+            <input name="email" type="email" placeholder="Your Email" required aria-label="Your Email" />
+          </div>
+          <input name="subject" type="text" placeholder="Subject" aria-label="Subject" />
+          <textarea name="message" rows={5} placeholder="Your Message" required aria-label="Your Message" />
+          <button type="submit" className="btn btn-send">
+            Send Message <Icon name="send" size={16} />
+          </button>
+        </form>
       </div>
 
       <div className="container footer-sites">

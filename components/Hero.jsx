@@ -43,6 +43,9 @@ export default function Hero() {
           </div>
 
           <div className="hero-actions">
+            <a className="btn btn-white" href={profile.scholar} target="_blank" rel="noreferrer">
+              <Icon name="grad" size={17} /> Google Scholar
+            </a>
             <a className="btn btn-ghost" href={profile.linkedin} target="_blank" rel="noreferrer">
               <Icon name="linkedin" size={17} /> LinkedIn
             </a>

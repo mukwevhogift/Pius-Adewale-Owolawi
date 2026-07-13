@@ -2,12 +2,13 @@ export const profile = {
   name: "Prof. Pius A. Owolawi, PhD",
   tagline: "Global AI & Business Transformation Executive",
   subtitle: ["Digital Strategy", "Industry 4.0", "Enterprise Innovation"],
-  location: "Georgia, USA / South Africa",
+  location: "Georgia / Virginia, USA",
   authorization: "U.S. Permanent Resident",
   email: "p.owolawi@gmail.com",
-  phones: ["+1 478 381 4264", "+1 686 203 9845"],
+  phones: ["+1 478 491 1894"],
+  linkedin: "https://www.linkedin.com/in/owolawi-pius-adewale-97b61375/",
+  scholar: "https://scholar.google.com/citations?hl=en&user=uxyoAbYAAAAJ&view_op=list_works&sortby=pubdate",
   // TODO: replace the placeholders below with real URLs
-  linkedin: "#",
   github: "#",
   calendar: "#", // e.g. a Calendly link for "Schedule a Call"
   resume: "/resume.pdf",
@@ -45,6 +46,7 @@ export const metrics = [
   { icon: "funding", value: "R94.2M+", sub: "≈ US$5.0M", label: "Funding Secured / Managed" },
   { icon: "publications", value: "200+", label: "Peer-Reviewed Publications" },
   { icon: "citations", value: "2,000+", label: "Citations" },
+  { icon: "grad", value: "Multiple", label: "PhD, MSc & Postdoctoral Fellows Supervised" },
   { icon: "leadership", value: "20+", label: "Years of Leadership Experience" },
   { icon: "labs", value: "15+", label: "Labs & Platforms Established" },
 ];
